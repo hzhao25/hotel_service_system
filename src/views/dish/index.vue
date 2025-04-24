@@ -11,12 +11,23 @@
                   @keyup.enter.native="initFun" />
 
         <label style="margin-right: 10px; margin-left: 20px">菜品分类：</label>
-        <el-select v-model="categoryId"
+        <!-- <el-select v-model="categoryId"
                    style="width: 14%"
                    placeholder="请选择"
                    clearable
                    @clear="init">
           <el-option v-for="item in dishCategoryList"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value" />
+        </el-select> -->
+         <el-select v-model="category"
+                   style="width: 14%"
+                   placeholder="请选择"
+                   clearable
+                   @clear="init">
+          <!-- 以下为修改部分：直接使用预设的分类选项 -->
+          <el-option v-for="item in dishCategories"
                      :key="item.value"
                      :label="item.label"
                      :value="item.value" />
@@ -77,7 +88,7 @@
             </el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="categoryName"
+        <el-table-column prop="category"
                          label="菜品分类" />
         <el-table-column label="售价">
           <template slot-scope="scope">
@@ -92,7 +103,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="updateTime"
+        <el-table-column prop="updatedAt"
                          label="最后操作时间" />
         <el-table-column label="操作"
                          width="250"
@@ -145,7 +156,7 @@ import {
   editDish,
   deleteDish,
   dishStatusByStatus,
-  dishCategoryList
+  // dishCategoryList
 } from '@/api/dish'
 import InputAutoComplete from '@/components/InputAutoComplete/index.vue'
 import Empty from '@/components/Empty/index.vue'
@@ -167,8 +178,8 @@ export default class extends Vue {
   private checkList: string[] = []
   private tableData: [] = []
   private dishState = ''
-  private dishCategoryList = []
-  private categoryId = ''
+  // private dishCategoryList = []
+  private category = ''
   private dishStatus = ''
   private isSearch: boolean = false
   private saleStatus: any = [
@@ -182,9 +193,18 @@ export default class extends Vue {
     }
   ]
 
+  // 以下为修改部分：新增 dishCategories 数据属性，定义预设的分类选项
+  private dishCategories = [
+    { value: '主食', label: '主食' },
+    { value: '素菜', label: '素菜' },
+    { value: '荤菜', label: '荤菜' },
+    { value: '饮料', label: '饮料' },
+    { value: '炖汤', label: '炖汤' }
+  ]
+
   created() {
     this.init()
-    this.getDishCategoryList()
+    // this.getDishCategoryList()
   }
 
   initProp(val) {
@@ -203,7 +223,7 @@ export default class extends Vue {
       page: this.page,
       pageSize: this.pageSize,
       name: this.input || undefined,
-      categoryId: this.categoryId || undefined,
+      category: this.category || undefined,
       status: this.dishStatus
     })
       .then(res => {
@@ -252,7 +272,7 @@ export default class extends Vue {
         })
     })
   }
-  //获取菜品分类下拉数据
+/*   //获取菜品分类下拉数据
   private getDishCategoryList() {
     dishCategoryList({
       type: 1
@@ -269,7 +289,7 @@ export default class extends Vue {
         }
       })
       .catch(() => {})
-  }
+  } */
 
   //状态更改
   private statusHandle(row: any) {

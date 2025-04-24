@@ -1,15 +1,16 @@
 <template>
   <div class="dashboard-container">
     <div class="container">
-      <div class="tableBar"
-           style="display: inline-block; width: 100%">
+      <div class="tableBar" style="display: inline-block; width: 100%">
         <label style="margin-right: 10px">分类名称：</label>
-        <el-input v-model="name"
-                  placeholder="请填写分类名称"
-                  style="width: 15%"
-                  clearable
-                  @clear="init"
-                  @keyup.enter.native="init" />
+        <el-input
+          v-model="name"
+          placeholder="请填写分类名称"
+          style="width: 15%"
+          clearable
+          @clear="init"
+          @keyup.enter.native="init"
+        />
 
         <label style="margin-right: 5px; margin-left: 20px">分类类型：</label>
         <el-select v-model="categoryType"
@@ -24,123 +25,167 @@
         </el-select>
 
         <div style="float: right">
-          <el-button type="primary"
-                     class="continue"
-                     @click="addClass('class')">
-            + 新增菜品分类
+          <el-button type="primary" class="continue" @click="addClass('class')">
+            + 新增服务分类
           </el-button>
-          <el-button type="primary"
+          <!-- <el-button type="primary"
                      style="margin-left:20px"
                      @click="addClass('meal')">
             + 新增套餐分类
-          </el-button>
+          </el-button> -->
         </div>
 
-        <el-button class="normal-btn continue"
-                   @click="init(true)">
+        <el-button class="normal-btn continue" @click="init(true)">
           查询
         </el-button>
       </div>
-      <el-table v-if="tableData.length"
-                :data="tableData"
-                stripe
-                class="tableBox">
-        <el-table-column prop="name"
-                         label="分类名称" />
+      <el-table
+        v-if="tableData.length"
+        :data="tableData"
+        stripe
+        class="tableBox"
+      >
+        <el-table-column prop="name" label="分类名称" />
         <el-table-column prop="type"
-                         label="分类类型">
-          <template slot-scope="scope">
+                         label="分类类型" />
+          <!-- <template slot-scope="scope">
             <span>{{ scope.row.type == '1' ? '菜品分类' : '套餐分类' }}</span>
-          </template>
-        </el-table-column>
+          </template> -->
+        <!-- </el-table-column> -->
 
-        <el-table-column prop="sort"
-                         label="排序" />
+        <!-- <el-table-column prop="sort"
+                         label="排序" /> -->
+        <el-table-column prop="startTime" label="开始服务时间" />
+        <el-table-column prop="endTime" label="结束服务时间" />
         <el-table-column label="状态">
           <template slot-scope="scope">
-            <div class="tableColumn-status"
-                 :class="{ 'stop-use': String(scope.row.status) === '0' }">
+            <div
+              class="tableColumn-status"
+              :class="{ 'stop-use': String(scope.row.status) === '0' }"
+            >
               {{ String(scope.row.status) === '0' ? '禁用' : '启用' }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="updateTime"
-                         label="操作时间" />
-        <el-table-column label="操作"
-                         width="200"
-                         align="center">
+        <el-table-column prop="updatedAt" label="操作时间" />
+        <el-table-column label="操作" width="200" align="center">
           <template slot-scope="scope">
-            <el-button type="text"
-                       size="small"
-                       class="blueBug"
-                       @click="editHandle(scope.row)">
+            <el-button
+              type="text"
+              size="small"
+              class="blueBug"
+              @click="editHandle(scope.row)"
+            >
               修改
             </el-button>
-            <el-button type="text"
-                       size="small"
-                       class="delBut"
-                       @click="deleteHandle(scope.row.id)">
+            <el-button
+              type="text"
+              size="small"
+              class="delBut"
+              @click="deleteHandle(scope.row.id)"
+            >
               删除
             </el-button>
-            <el-button type="text"
-                       size="small"
-                       class="non"
-                       :class="{
-                         blueBug: scope.row.status == '0',
-                         delBut: scope.row.status != '0'
-                       }"
-                       @click="statusHandle(scope.row)">
+            <el-button
+              type="text"
+              size="small"
+              class="non"
+              :class="{
+                blueBug: scope.row.status == '0',
+                delBut: scope.row.status != '0'
+              }"
+              @click="statusHandle(scope.row)"
+            >
               {{ scope.row.status == '1' ? '禁用' : '启用' }}
             </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <Empty v-else
-             :is-search="isSearch" />
-      <el-pagination v-if="counts > 10"
-                     class="pageList"
-                     :page-sizes="[10, 20, 30, 40]"
-                     :page-size="pageSize"
-                     layout="total, sizes, prev, pager, next, jumper"
-                     :total="counts"
-                     @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange" />
+      <Empty v-else :is-search="isSearch" />
+      <el-pagination
+        v-if="counts > 10"
+        class="pageList"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="counts"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </div>
-    <el-dialog :title="classData.title"
-               :visible.sync="classData.dialogVisible"
-               width="30%"
-               :before-close="handleClose">
-      <el-form ref="classData"
-               :model="classData"
-               class="demo-form-inline"
-               :rules="rules"
-               label-width="100px">
-        <el-form-item label="分类名称："
-                      prop="name">
-          <el-input v-model="classData.name"
-                    placeholder="请输入分类名称"
-                    maxlength="20" />
+    <el-dialog
+      :title="classData.title"
+      :visible.sync="classData.dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <el-form
+        ref="classData"
+        :model="classData"
+        class="demo-form-inline"
+        :rules="rules"
+        label-width="100px"
+      >
+        <el-form-item label="分类名称：" prop="name">
+          <el-input
+            v-model="classData.name"
+            placeholder="请输入分类名称"
+            maxlength="20"
+          />
         </el-form-item>
-        <el-form-item label="排序："
-                      prop="sort">
-          <el-input v-model="classData.sort"
-                    placeholder="请输入排序" />
+        <!-- 新增的分类类型选择框 -->
+      <el-form-item label="分类类型：" prop="type">
+        <el-select v-model="classData.type"
+                  placeholder="请选择"
+                  clearable
+                  style="width: 100%">
+          <el-option v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value" />
+        </el-select>
+          </el-form-item>
+        <!-- <el-form-item label="排序：" prop="sort">
+          <el-input v-model="classData.sort" placeholder="请输入排序" />
+        </el-form-item> -->
+        <el-form-item label="开始服务时间：" prop="startTime">
+          <el-time-picker
+            v-model="classData.startTime"
+            placeholder="请选择开始服务时间"
+            format="HH:mm:ss"
+            value-format="HH:mm:ss"
+          />
+        </el-form-item>
+        <el-form-item label="结束服务时间：" prop="endTime">
+          <el-time-picker
+            v-model="classData.endTime"
+            placeholder="请选择结束服务时间"
+            format="HH:mm:ss"
+            value-format="HH:mm:ss"
+          />
         </el-form-item>
       </el-form>
-      <span slot="footer"
-            class="dialog-footer">
-        <el-button size="medium"
-                   @click="
+      <span slot="footer" class="dialog-footer">
+        <el-button
+          size="medium"
+          @click="
             ;(classData.dialogVisible = false), $refs.classData.resetFields()
-                   ">取 消</el-button>
-        <el-button type="primary"
-                   :class="{ continue: actionType === 'add' }"
-                   size="medium"
-                   @click="submitForm()">确 定</el-button>
-        <el-button v-if="action != 'edit'"
-                   type="primary"
-                   size="medium"
-                   @click="submitForm('go')">
+          "
+          >取 消</el-button
+        >
+        <el-button
+          type="primary"
+          :class="{ continue: actionType === 'add' }"
+          size="medium"
+          @click="submitForm()"
+          >确 定</el-button
+        >
+        <el-button
+          v-if="action != 'edit'"
+          type="primary"
+          size="medium"
+          @click="submitForm('go')"
+        >
           保存并继续添加
         </el-button>
       </span>
@@ -156,7 +201,7 @@ import {
   deleCategory,
   editCategory,
   addCategory,
-  enableOrDisableEmployee
+  enableOrDisableEmployee,
 } from '@/api/category'
 import Empty from '@/components/Empty/index.vue'
 
@@ -164,19 +209,23 @@ import Empty from '@/components/Empty/index.vue'
   name: 'Category',
   components: {
     HeadLable,
-    Empty
-  }
+    Empty,
+  },
 })
 export default class extends Vue {
   private options: any = [
     {
-      value: 1,
-      label: '菜品分类'
+      value: '服务',
+      label: '服务',
     },
     {
-      value: 2,
-      label: '套餐分类'
-    }
+      value: '物品',
+      label: '物品',
+    },
+    {
+      value: '其他',
+      label: '其他',
+    },
   ]
   private actionType: string = ''
   private id = ''
@@ -195,7 +244,9 @@ export default class extends Vue {
     dialogVisible: false,
     categoryId: '',
     name: '',
-    sort: ''
+    //sort: '',
+    startTime: null,
+    endTime: null,
   }
 
   get rules() {
@@ -216,10 +267,10 @@ export default class extends Vue {
             } else {
               callback()
             }
-          }
-        }
+          },
+        },
       ],
-      sort: [
+      /*       sort: [
         {
           required: true,
           trigger: 'blur',
@@ -236,9 +287,23 @@ export default class extends Vue {
             } else {
               callback(new Error('排序不能为空'))
             }
-          }
-        }
-      ]
+          },
+        },
+      ], */
+      startTime: [
+        {
+          required: true,
+          message: '开始服务时间不能为空',
+          trigger: 'blur',
+        },
+      ],
+      endTime: [
+        {
+          required: true,
+          message: '结束服务时间不能为空',
+          trigger: 'blur',
+        },
+      ],
     }
   }
 
@@ -253,18 +318,19 @@ export default class extends Vue {
       page: this.page,
       pageSize: this.pageSize,
       name: this.name ? this.name : undefined,
-      type: this.categoryType ? this.categoryType : undefined
+      type: this.categoryType ? this.categoryType : undefined,
     })
-      .then(res => {
+      .then((res) => {
         if (String(res.data.code) === '1') {
           this.tableData =
             res && res.data && res.data.data && res.data.data.records
+          console.log(this.tableData)
           this.counts = Number(res.data.data.total)
         } else {
           this.$message.error(res.data.desc)
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err, 'err')
         this.$message.error('请求出错了：' + err.message)
       })
@@ -272,16 +338,19 @@ export default class extends Vue {
 
   // 添加
   private addClass(st: any) {
-    if (st == 'class') {
+    /* if (st == 'class') {
       this.classData.title = '新增菜品分类'
-      this.type = '1'
+      // this.type = '1'
     } else {
       this.classData.title = '新增套餐分类'
-      this.type = '2'
-    }
+      // this.type = '2'
+    } */
+    this.classData.title = '新增分类'
     this.action = 'add'
     this.classData.name = ''
-    this.classData.sort = ''
+    // this.classData.sort = ''
+    this.classData.startTime = null
+    this.classData.endTime = null
     this.classData.dialogVisible = true
     this.actionType = 'add'
   }
@@ -291,10 +360,14 @@ export default class extends Vue {
     this.classData.title = '修改分类'
     this.action = 'edit'
     this.classData.name = dat.name
-    this.classData.sort = dat.sort
+    // this.classData.sort = dat.sort
+    this.classData.startTime = dat.startTime
+    this.classData.endTime = dat.endTime
     this.classData.id = dat.id
     this.classData.dialogVisible = true
     this.actionType = 'edit'
+    // 补充处理分类类型
+    this.classData.type = dat.type
   }
 
   // 关闭弹窗
@@ -313,16 +386,16 @@ export default class extends Vue {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning',
-      customClass: 'customClass'
+      customClass: 'customClass',
     }).then(() => {
       enableOrDisableEmployee({ id: this.id, status: !this.status ? 1 : 0 })
-        .then(res => {
+        .then((res) => {
           if (String(res.status) === '200') {
             this.$message.success('分类状态更改成功！')
             this.init()
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.$message.error('请求出错了：' + err.message)
         })
     })
@@ -333,18 +406,19 @@ export default class extends Vue {
     this.$confirm('此操作将永久删除该分类，是否继续？', '确定删除', {
       confirmButtonText: '删除',
       cancelButtonText: '取消',
-      type: 'warning'
+      type: 'warning',
     }).then(() => {
       deleCategory(id)
-        .then(res => {
+        .then((res) => {
           if (res.data.code === 1) {
             this.$message.success('删除成功！')
+            // this.$refs.classData.resetFields()
             this.init()
           } else {
             this.$message.error(res.data.msg)
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.$message.error('请求出错了：' + err.message)
         })
     })
@@ -361,13 +435,19 @@ export default class extends Vue {
         if (value) {
           addCategory({
             name: this.classData.name,
-            type: this.type,
-            sort: this.classData.sort
+            // type: this.type,
+            type: this.classData.type, // 确保发送选择的分类类型
+            // sort: this.classData.sort,
+            startTime: this.classData.startTime,
+            endTime: this.classData.endTime,
           })
-            .then(res => {
+            .then((res) => {
               if (res.data.code === 1) {
                 this.$message.success('分类添加成功！')
                 this.$refs.classData.resetFields()
+                // 重置查询参数
+                this.name = ''
+                this.categoryType = null
                 if (!st) {
                   this.classData.dialogVisible = false
                 }
@@ -376,7 +456,7 @@ export default class extends Vue {
                 this.$message.error(res.data.desc || res.data.msg)
               }
             })
-            .catch(err => {
+            .catch((err) => {
               this.$message.error('请求出错了：' + err.message)
             })
         }
@@ -387,9 +467,12 @@ export default class extends Vue {
           editCategory({
             id: this.classData.id,
             name: this.classData.name,
-            sort: this.classData.sort
+            // sort: this.classData.sort,
+            startTime: this.classData.startTime,
+            endTime: this.classData.endTime,
+            type: this.classData.type, // 添加传递 type 属性
           })
-            .then(res => {
+            .then((res) => {
               if (res.data.code === 1) {
                 this.$message.success('分类修改成功！')
                 this.classData.dialogVisible = false
@@ -399,7 +482,7 @@ export default class extends Vue {
                 this.$message.error(res.data.desc || res.data.msg)
               }
             })
-            .catch(err => {
+            .catch((err) => {
               this.$message.error('请求出错了：' + err.message)
             })
         }
