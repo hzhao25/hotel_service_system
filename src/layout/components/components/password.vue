@@ -72,7 +72,7 @@ export default class extends Vue {
   private form = {} as any
   private affirmPassword = ''
   handleSave() {
-    ;(this.$refs.form as ElForm).validate(async (valid: boolean) => {
+    (this.$refs.form as ElForm).validate(async (valid: boolean) => {
       if (valid) {
         const parnt = {
           oldPassword: this.form.oldPassword,
@@ -87,7 +87,7 @@ export default class extends Vue {
     })
   }
   handlePwdClose() {
-    ;(this.$refs.form as ElForm).resetFields()
+    (this.$refs.form as ElForm).resetFields()
     this.$emit('handleclose')
   }
 }

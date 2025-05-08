@@ -111,19 +111,19 @@
 //按钮的背景色设置
 .el-button--primary {
   color: #333333;
-  background: #FFC200;
-  border-color: #FFC200;
+  background: $accent-green;
+  border-color: $accent-green;
 }
 
 .el-button--primary:hover {
-  background: #fdd24c;
-  border-color: #fdd24c;
+  background: $accent-green;
+  border-color: $accent-green;
   color: #333333;
 }
 
 .el-button--primary:active {
-  background: #efb602;
-  border-color: #efb602;
+  background: $accent-green;
+  border-color: $accent-green;
   color: #333333;
 }
 
@@ -156,4 +156,52 @@
 
 .dashboard-container .container .el-table tbody tr td .cell button span {
   // padding: 0 10px;
+}
+
+// 统一选中高亮色为$accent-green
+.el-radio__input.is-checked .el-radio__inner {
+  border-color: $accent-green;
+  background: $accent-green;
+}
+
+.el-radio__input.is-focus .el-radio__inner {
+  border-color: $accent-green;
+}
+
+.el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
+  -webkit-box-shadow: 0 0 2px 2px $accent-green;
+  box-shadow: 0 0 2px 2px $accent-green;
+}
+
+.el-radio-button__orig-radio:checked+.el-radio-button__inner {
+  color: #fff;
+  background-color: $accent-green;
+  border-color: $accent-green;
+  -webkit-box-shadow: -1px 0 0 0 $accent-green;
+  box-shadow: -1px 0 0 0 $accent-green;
+}
+
+.el-radio-button:focus:not(.is-focus):not(:active):not(.is-disabled) {
+  -webkit-box-shadow: 0 0 2px 2px $accent-green;
+  box-shadow: 0 0 2px 2px $accent-green;
+}
+
+.el-checkbox.is-bordered.is-checked {
+  border-color: $accent-green;
+}
+
+.el-checkbox-button.is-checked .el-checkbox-button__inner {
+  color: #fff;
+  background-color: $accent-green;
+  border-color: $accent-green;
+  -webkit-box-shadow: -1px 0 0 0 $accent-green;
+  box-shadow: -1px 0 0 0 $accent-green;
+}
+
+.el-checkbox-button.is-checked:first-child .el-checkbox-button__inner {
+  border-left-color: $accent-green;
+}
+
+.el-checkbox-button.is-focus .el-checkbox-button__inner {
+  border-color: $accent-green;
 }

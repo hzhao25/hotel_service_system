@@ -201,7 +201,7 @@ import {
   getTimeQuantumDiscount,
   getChartsDataes,
 } from '@/api/charts'
-import { isBoolean } from 'style-resources-loader/lib/utils'
+// import { isBoolean } from 'style-resources-loader/lib/utils'
 import request from '@/utils/request'
 
 @Component({
@@ -446,7 +446,7 @@ export default class extends Vue {
           data &&
             data.length > 0 &&
             data.forEach((item: any) => {
-              ;(charts.legendData as Array<string>).push(item.name as string)
+              (charts.legendData as Array<string>).push(item.name as string)
               ;(charts.selected as any)[item.name] = true
             })
           this.chartDataC = charts
@@ -481,7 +481,7 @@ export default class extends Vue {
           data &&
             data.length > 0 &&
             data.forEach((item: any) => {
-              ;(charts.legendData as Array<string>).push(item.name as string)
+              (charts.legendData as Array<string>).push(item.name as string)
               ;(charts.selected as any)[item.name] = true
             })
           this.chartDataD = charts
@@ -631,7 +631,7 @@ export default class extends Vue {
           data &&
             data.length > 0 &&
             data.forEach((item: any) => {
-              ;(charts.legendData as Array<string>).push(item.name as string)
+              (charts.legendData as Array<string>).push(item.name as string)
               ;(charts.selected as any)[item.name] = true
             })
           this.chartDataD = charts
@@ -670,7 +670,7 @@ export default class extends Vue {
           }
           data.length > 0 &&
             data.forEach((item: any) => {
-              ;(charts.legendData as Array<string>).push(item.name as string)
+              (charts.legendData as Array<string>).push(item.name as string)
               ;(charts.selected as any)[item.name] = true
             })
           this.chartDataC = charts

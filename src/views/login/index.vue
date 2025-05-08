@@ -1,13 +1,13 @@
 <template>
   <div class="login">
     <div class="login-box">
-      <img src="@/assets/login/login-l.png" alt="" />
+      <img src="@/assets/login/hotel_logo1.png" alt="" />
       <div class="login-form">
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
           <div class="login-form-title">
             <img
-              src="@/assets/login/icon_logo.png"
-              style="width: 149px; height: 38px"
+              src="@/assets/login/hotel_logo.png"
+              style="width: 149px; height: 120px"
               alt=""
             />
             <!-- <span class="title-label">酒店客房服务系统</span> -->
@@ -208,12 +208,10 @@ export default class extends Vue {
   border: 0;
   font-weight: 500;
   color: #333333;
-  // background: #09a57a;
-  background-color: #ffc200;
+  background-color: $accent-green;
   &:hover,
   &:focus {
-    // background: #09a57a;
-    background-color: #ffc200;
+    background-color: $accent-green;
     color: #ffffff;
   }
 }

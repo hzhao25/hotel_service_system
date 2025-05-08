@@ -11,7 +11,7 @@
         alt=""
         style="width: 120px; height: 31px"
       /> -->
-      <div v-if="!isCollapse"
+<!--       <div v-if="!isCollapse"
            class="sidebar-logo">
         <img src="@/assets/login/logo.png"
              style="width: 120px; height: 31px">
@@ -19,7 +19,7 @@
       <div v-else
            class="sidebar-logo-mini">
         <img src="@/assets/login/mini-logo.png">
-      </div>
+      </div> -->
     </div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu :default-openeds="defOpen"
@@ -135,7 +135,7 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .logo {
   text-align: center;
-  background-color: #ffc100;
+  background-color: rgb(76,175,80);
   padding: 15px 0 0;
   height: 60px;
   img {

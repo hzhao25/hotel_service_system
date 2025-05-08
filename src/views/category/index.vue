@@ -536,6 +536,17 @@ export default class extends Vue {
         color: white;
         margin-left: 20px;
       }
+
+      // 新增服务分类按钮样式
+      .el-button--primary.continue {
+        background-color: rgb(55,171,104) !important;
+        border-color: rgb(55,171,104) !important;
+        &:hover, &:focus {
+          background-color: rgb(55,171,104) !important;
+          border-color: rgb(55,171,104) !important;
+          opacity: 0.8;
+        }
+      }
     }
   }
 }

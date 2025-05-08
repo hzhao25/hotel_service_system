@@ -125,6 +125,60 @@ const router = new Router({
           }
         },
         {
+          path: 'product',
+          component: () =>
+            import(/* webpackChunkName: "shopTable" */ '@/views/product/index.vue'),
+          meta: {
+            title: '商品管理',
+            icon: 'icon-order'
+          }
+        },
+        {
+          path: '/product/add',
+          component: () =>
+            import(/* webpackChunkName: "dashboard" */ '@/views/product/addProduct.vue'),
+          meta: {
+            title: '添加商品',
+            hidden: true
+          }
+        },
+        {
+          path: 'consume',
+          component: () =>
+            import(/* webpackChunkName: "shopTable" */ '@/views/consume/index.vue'),
+          meta: {
+            title: '消耗品管理',
+            icon: 'icon-order'
+          }
+        },
+        {
+          path: '/consume/add',
+          component: () =>
+            import(/* webpackChunkName: "dashboard" */ '@/views/consume/addConsume.vue'),
+          meta: {
+            title: '添加消耗品',
+            hidden: true
+          }
+        },
+        {
+          path: 'room',
+          component: () =>
+            import(/* webpackChunkName: "shopTable" */ '@/views/room/index.vue'),
+          meta: {
+            title: '客房管理',
+            icon: 'icon-category'
+          }
+        },
+        {
+          path: '/room/add',
+          component: () =>
+            import(/* webpackChunkName: "dashboard" */ '@/views/room/addRoom.vue'),
+          meta: {
+            title: '添加客房',
+            hidden: true
+          }
+        },
+        {
           path: '/setmeal/add',
           component: () =>
             import(/* webpackChunkName: "shopTable" */ '@/views/setmeal/addSetmeal.vue'),

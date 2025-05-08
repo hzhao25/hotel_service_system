@@ -282,13 +282,13 @@ export default class extends Vue {
       }
     }
     .act {
-      border-color: $mine !important;
-      color: $mine !important;
+      border-color: $accent-green !important;
+      color: $accent-green !important;
     }
     .act::after {
       content: ' ';
       display: inline-block;
-      background-color: $mine;
+      background-color: $accent-green;
       width: 2px;
       height: 40px;
       position: absolute;
