@@ -3,17 +3,18 @@ import request from '@/utils/request'
 // 查询列表页接口
 export const getOrderDetailPage = (params: any) => {
   return request({
-    url: '/order/conditionSearch',
+    url: '/order/page',
     method: 'get',
     params
   })
 }
 
 // 查看接口
-export const queryOrderDetailById = (params: any) => {
+export const queryOrderDetailById = (id: number) => {
   return request({
-    url: `/order/details/${params.orderId}`,
-    method: 'get'
+    url: '/order/detail',
+    method: 'get',
+    params: { id }
   })
 }
 
@@ -64,5 +65,14 @@ export const getOrderListBy = (params: any) => {
   return request({
     url: '/order/statistics',
     method: 'get' /*  */
+  })
+}
+
+//更新订单状态
+export const updateOrderStatus = (status: string, id: number) => {
+  return request({
+    url: `/order/updateStatus/${status}`,
+    method: 'post',
+    params: { id }
   })
 }

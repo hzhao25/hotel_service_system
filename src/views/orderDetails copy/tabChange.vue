@@ -1,17 +1,15 @@
 <!--  -->
 <template>
   <div class="tab-change">
-    <div
-      v-for="item in statusList"
-      :key="item.value"
-      class="tab-item"
-      :class="{ active: item.value === activeStatus }"
-      @click="tabChange(item.value)">
-      <el-badge
-        :class="{'special-item': item.count < 10}"
-        class="item"
-        :value="item.count > 99 ? '99+' : item.count"
-        :hidden="!item.count || item.count <= 0">
+    <div v-for="item in changedOrderList"
+         :key="item.value"
+         class="tab-item"
+         :class="{ active: item.value === activeIndex }"
+         @click="tabChange(item.value)">
+      <el-badge :class="{'special-item':item.num<10}"
+                class="item"
+                :value="item.num > 99 ? '99+' : item.num"
+                :hidden="!([2, 3, 4].includes(item.value) && item.num)">
         {{ item.label }}
       </el-badge>
     </div>
@@ -20,61 +18,63 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { getOrderDetailPage } from '@/api/order'
 
 @Component({
   name: 'TabChange'
 })
 export default class extends Vue {
-  @Prop({ default: '全部' }) defaultActivity!: string
-  @Prop({ default: {} }) orderStatics: any
-  private activeStatus = '全部'
+  @Prop({ default: 0 }) defaultActivity!: number
+  @Prop({ default: '' }) orderStatics: any
+  private activeIndex = 0
 
   created() {
-    this.activeStatus = this.defaultActivity
+    this.activeIndex = this.defaultActivity
   }
 
   @Watch('defaultActivity')
   private onChange(val) {
-    this.activeStatus = val
+    this.activeIndex = Number(val)
   }
 
-  get statusList() {
+  get changedOrderList() {
     return [
       {
-        label: '全部',
-        value: '全部',
-        count: 0
+        label: '全部订单',
+        value: 0
       },
       {
-        label: '未接单',
-        value: '未接单',
-        count: this.orderStatics.pending || 0
+        label: '待接单',
+        value: 2,
+        num: this.orderStatics.toBeConfirmed
       },
       {
-        label: '已接单',
-        value: '已接单',
-        count: this.orderStatics.accepted || 0
+        label: '待派送',
+        value: 3,
+        num: this.orderStatics.confirmed
+      },
+      {
+        label: '派送中',
+        value: 4,
+        num: this.orderStatics.deliveryInProgress
       },
       {
         label: '已完成',
-        value: '已完成',
-        count: 0
+        value: 5
       },
       {
         label: '已取消',
-        value: '已取消',
-        count: 0
+        value: 6
       }
     ]
   }
 
-  private tabChange(status) {
-    this.activeStatus = status
-    this.$emit('tabChange', status)
+  private tabChange(activeIndex) {
+    this.activeIndex = activeIndex
+    this.$emit('tabChange', activeIndex)
   }
 }
 </script>
-
 <style lang="scss">
 .tab-change {
   display: flex;
@@ -104,6 +104,7 @@ export default class extends Vue {
         height: auto;
         min-width: 18px;
         min-height: 18px;
+        // border-radius: 50%;
       }
       .el-badge__content.is-fixed {
         top: 14px;
@@ -113,10 +114,8 @@ export default class extends Vue {
   }
   .active {
     background-color: rgb(76,175,80);
-    color: white;
     font-weight: bold;
   }
-
   .tab-item:first-child {
     border-left: 1px solid #e5e4e4;
   }

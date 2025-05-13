@@ -29,38 +29,39 @@ const router = new Router({
       path: '/login',
       component: () =>
         import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
-      meta: { title: '苍穹外卖', hidden: true, notNeedAuth: true }
+      meta: { title: '酒店客房服务系统', hidden: true, notNeedAuth: true }
     },
     {
       path: '/404',
       component: () => import(/* webpackChunkName: "404" */ '@/views/404.vue'),
-      meta: { title: '苍穹外卖', hidden: true, notNeedAuth: true }
+      meta: { title: '酒店客房服务系统', hidden: true, notNeedAuth: true }
     },
     {
       path: '/',
       component: Layout,
-      redirect: '/dashboard',
+      redirect: '/order',
+      // redirect: '/dashboard',
       children: [
-        {
-          path: 'dashboard',
-          component: () =>
-            import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
-          name: 'Dashboard',
-          meta: {
-            title: '工作台',
-            icon: 'dashboard',
-            affix: true
-          }
-        },
-        {
-          path: '/statistics',
-          component: () =>
-            import(/* webpackChunkName: "shopTable" */ '@/views/statistics/index.vue'),
-          meta: {
-            title: '数据统计',
-            icon: 'icon-statistics'
-          }
-        },
+        // {
+        //   path: 'dashboard',
+        //   component: () =>
+        //     import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
+        //   name: 'Dashboard',
+        //   meta: {
+        //     title: '工作台',
+        //     icon: 'dashboard',
+        //     affix: true
+        //   }
+        // },
+        // {
+        //   path: '/statistics',
+        //   component: () =>
+        //     import(/* webpackChunkName: "shopTable" */ '@/views/statistics/index.vue'),
+        //   meta: {
+        //     title: '数据统计',
+        //     icon: 'icon-statistics'
+        //   }
+        // },
         {
           path: 'order',
           component: () =>
@@ -70,15 +71,15 @@ const router = new Router({
             icon: 'icon-order'
           }
         },
-        {
-          path: 'setmeal',
-          component: () =>
-            import(/* webpackChunkName: "shopTable" */ '@/views/setmeal/index.vue'),
-          meta: {
-            title: '套餐管理',
-            icon: 'icon-combo'
-          }
-        },
+        // {
+        //   path: 'setmeal',
+        //   component: () =>
+        //     import(/* webpackChunkName: "shopTable" */ '@/views/setmeal/index.vue'),
+        //   meta: {
+        //     title: '套餐管理',
+        //     icon: 'icon-combo'
+        //   }
+        // },
         {
           path: 'dish',
           component: () =>
@@ -178,15 +179,15 @@ const router = new Router({
             hidden: true
           }
         },
-        {
-          path: '/setmeal/add',
-          component: () =>
-            import(/* webpackChunkName: "shopTable" */ '@/views/setmeal/addSetmeal.vue'),
-          meta: {
-            title: '添加套餐',
-            hidden: true
-          }
-        }
+        // {
+        //   path: '/setmeal/add',
+        //   component: () =>
+        //     import(/* webpackChunkName: "shopTable" */ '@/views/setmeal/addSetmeal.vue'),
+        //   meta: {
+        //     title: '添加套餐',
+        //     hidden: true
+        //   }
+        // }
       ]
     },
     {

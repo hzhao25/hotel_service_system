@@ -159,7 +159,7 @@ export default class extends Vue {
     this.getStatus()
   }
   created() {
-    this.webSocket()
+    // this.webSocket()
   }
   onload() {
   }
